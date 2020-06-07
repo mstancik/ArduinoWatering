@@ -17,10 +17,11 @@
 // 2018-05-27 odstranena chyba cvakanie rele cerpadla studne ked sa nadoba blizi k naplnenej a v studni je dost vody,
 //            premenovanie funkcie setTime() na nastavCasPriSpustani()
 // 2019-04-14 odpajanie GND kontaktu senzorov vlhkosti v studni
+// 2020-06-07 include timelib.h namiesto time.h koli chybe v appke, VODA_PRAH na 1000
 
 #define VERSION 20190414
 
-#include <Time.h>
+#include <TimeLib.h>
 #include <LiquidCrystal.h>
 
 #define ECHOPIN 7 // Echo Pin
@@ -28,7 +29,7 @@
 #define PLNA 4 // vzdialenost v cm od senzora ked je nadrz plna
 #define PRAZDNA 89 // vzdialenost v cm od senzora ked je nadrz prazdna
 #define HLADINA_AKTIVACIE 95 // percento naplnenia nadrze pri ktorom zase zacne spinat cerpadlo a doplnat nadrz
-#define VODA_PRAH 900 // hodnota hladinovaho senzora, prah ked detekuje vodu
+#define VODA_PRAH 1000 // hodnota hladinovaho senzora, prah ked detekuje vodu
 #define CAS_STUDNA 600 // cas v sekundach od posledneho cerpania zo studne
 
 // technicke definicie
