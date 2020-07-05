@@ -18,8 +18,9 @@
 //            premenovanie funkcie setTime() na nastavCasPriSpustani()
 // 2019-04-14 odpajanie GND kontaktu senzorov vlhkosti v studni
 // 2020-06-07 include timelib.h namiesto time.h koli chybe v appke, VODA_PRAH na 1000
+// 2020-07-05 voda prah 900, interval na novu skusku hladin 30 minut
 
-#define VERSION 20190414
+#define VERSION 20200705
 
 #include <TimeLib.h>
 #include <LiquidCrystal.h>
@@ -29,8 +30,8 @@
 #define PLNA 4 // vzdialenost v cm od senzora ked je nadrz plna
 #define PRAZDNA 89 // vzdialenost v cm od senzora ked je nadrz prazdna
 #define HLADINA_AKTIVACIE 95 // percento naplnenia nadrze pri ktorom zase zacne spinat cerpadlo a doplnat nadrz
-#define VODA_PRAH 1000 // hodnota hladinovaho senzora, prah ked detekuje vodu
-#define CAS_STUDNA 600 // cas v sekundach od posledneho cerpania zo studne
+#define VODA_PRAH 900 // hodnota hladinovaho senzora, prah ked detekuje vodu
+#define CAS_STUDNA 1800 // cas v sekundach od posledneho cerpania zo studne
 
 // technicke definicie
 #define TIME_MSG_LEN  11   // time sync to PC is HEADER and unix time_t as ten ascii digits
