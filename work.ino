@@ -350,7 +350,7 @@ void nastavCasPriSpustani() {
   lcd.setCursor(0, 0);
   lcd.print("Set mode");
   timer = 0;
-  while (timer < 15) {
+  while (timer < 15) {ww
     // cas
     lcd.setCursor(0, 1);
     if (gMode == 0)
