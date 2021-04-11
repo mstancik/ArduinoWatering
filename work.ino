@@ -19,6 +19,7 @@
 // 2019-04-14 odpajanie GND kontaktu senzorov vlhkosti v studni
 // 2020-06-07 include timelib.h namiesto time.h koli chybe v appke, VODA_PRAH na 1000
 // 2020-07-05 voda prah 900, interval na novu skusku hladin 30 minut
+// 2021-04-11 nastavenie modu polievania (vobec, vecer, rano aj vecer) pri zapinani
 
 #define VERSION 20200705
 
@@ -65,6 +66,7 @@ int zavlahaRano[2] = {06, 00}; // cas rannej zavlahy
 int gCasZavlahy[6]; // casy pri ktorych sa prepne dalsia sekcia pri mode 1
 int gPerZavlahy[6]; // percenta pri ktorych sa prepne dalsia sekcia pri modoch 2,3
 int gValueMin, gValueMax;
+int gMode = 0;  // mod zavlahy 0 - nepolievaj, 1 - iba vecer, 2 - vecer aj rano
 
 // ***** funkcie ******
 void zapniSekciu(int i);
@@ -121,6 +123,7 @@ void loop() {
 
     // management nadoby a cerpadla v studni
     gPercentoNaplnenia = percentoNaplnenia();
+    
     //gPercentoNaplnenia = 60;
     naplnajNadobu();
 
@@ -167,7 +170,7 @@ void loop() {
 
         // sekcia 6 kvapkova
         gPerZavlahy[5] = gPerZavlahy[4] - (percSekcia * 0.5);
-        gCasZavlahy[5] = 5 * 60;
+        gCasZavlahy[5] = 1 * 5;
 
         lcd.clear();
         lcd.setCursor(0, 0);
@@ -192,7 +195,7 @@ void loop() {
     }
 
     // spustanie zavlahy v stanoveny cas
-    if ((hour() == zavlahaVecer[0] && minute() == zavlahaVecer[1] && second() == 0) || (hour() == zavlahaRano[0] && minute() == zavlahaRano[1] && second() == 0)) {
+    if ((hour() == zavlahaVecer[0] && minute() == zavlahaVecer[1] && second() == 0 && gMode > 0) || (hour() == zavlahaRano[0] && minute() == zavlahaRano[1] && second() == 0 && gMode > 1)) {
       if (gZavlahaMod == 2) { // Mod 2 vypolievat celu nadrz aj rano aj vecer, kriterium je bud percento alebo cas
         lcd.clear();
         lcd.setCursor(0, 0);
@@ -343,6 +346,30 @@ void nastavCasPriSpustani() {
   }
 
   setTime(h, m, 00, 1, 1, 2016);
+
+  lcd.setCursor(0, 0);
+  lcd.print("Set mode");
+  timer = 0;
+  while (timer < 15) {
+    // cas
+    lcd.setCursor(0, 1);
+    if (gMode == 0)
+      lcd.print("No watering");
+    if (gMode == 1)
+      lcd.print("At the evening");
+    if (gMode == 2)
+      lcd.print("Both evening and morning");
+
+    if (digitalRead(13) == 0) {
+      gMode++;
+      if (gMode > 2)
+        gMode = 0;
+      timer = 0;
+    }
+    else
+      timer++;
+    delay(200);
+  }
 }
 
 // prevedie cislo do binarneho kodu BCD pre digitalne vystupy 8-10, 0 nic, 1 prve rele,... atd
