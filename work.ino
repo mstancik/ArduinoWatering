@@ -123,8 +123,8 @@ void loop() {
 
     // management nadoby a cerpadla v studni
     gPercentoNaplnenia = percentoNaplnenia();
+    gPercentoNaplnenia = 100;
     
-    //gPercentoNaplnenia = 60;
     naplnajNadobu();
 
     if (digitalRead(13) == 0) { // ak sa stlaci tlacitko zapne alebo vypne to zavlahu v tom momente
@@ -134,7 +134,7 @@ void loop() {
         lcd.print("Stop");
         lcd.setCursor(0, 1);
         lcd.print("watering...");
-        delay(1000);
+        delay(10000);
         gZavlaha = 0;
         zapniSekciu(0);
       }
@@ -150,23 +150,23 @@ void loop() {
 
         // sekcia 1 vzadu pri domceku
         gPerZavlahy[0] = gPercentoNaplnenia - (percSekcia * 1.6);
-        gCasZavlahy[0] = 20 * 60;
+        gCasZavlahy[0] = 15 * 60;
 
         //sekcia 2 pri terase
         gPerZavlahy[1] = gPerZavlahy[0] - (percSekcia * 1.3);
-        gCasZavlahy[1] = 16 * 60;
+        gCasZavlahy[1] = 12 * 60;
 
         //sekcia 3 bok a skalka
         gPerZavlahy[2] = gPerZavlahy[1] - (percSekcia * 0.5);
-        gCasZavlahy[2] = 4 * 60;
+        gCasZavlahy[2] = 3 * 60;
 
         //sekcia 4 vpredu rotatory
         gPerZavlahy[3] = gPerZavlahy[2] - (percSekcia * 0.8);
-        gCasZavlahy[3] = 16 * 60;
+        gCasZavlahy[3] = 12 * 60;
 
         // sekcia 5 vzadu pri komposte
         gPerZavlahy[4] = gPerZavlahy[3] - (percSekcia * 1.1);
-        gCasZavlahy[4] = 16 * 60;
+        gCasZavlahy[4] = 12 * 60;
 
         // sekcia 6 kvapkova
         gPerZavlahy[5] = gPerZavlahy[4] - (percSekcia * 0.5);
@@ -208,11 +208,11 @@ void loop() {
 
         // sekcia 1 vzadu pri domceku
         gPerZavlahy[0] = gPercentoNaplnenia - (percSekcia * 1.6);
-        gCasZavlahy[0] = 20 * 60;
+        gCasZavlahy[0] = 16 * 60;
 
         //sekcia 2 pri terase
         gPerZavlahy[1] = gPerZavlahy[0] - (percSekcia * 1.3);
-        gCasZavlahy[1] = 16 * 60;
+        gCasZavlahy[1] = 12 * 60;
 
         //sekcia 3 bok a skalka
         gPerZavlahy[2] = gPerZavlahy[1] - (percSekcia * 0.5);
@@ -220,15 +220,15 @@ void loop() {
 
         //sekcia 4 vpredu rotatory
         gPerZavlahy[3] = gPerZavlahy[2] - (percSekcia * 0.8);
-        gCasZavlahy[3] = 16 * 60;
+        gCasZavlahy[3] = 12 * 60;
 
         // sekcia 5 vzadu pri komposte
         gPerZavlahy[4] = gPerZavlahy[3] - (percSekcia * 1.1);
-        gCasZavlahy[4] = 16 * 60;
+        gCasZavlahy[4] = 11 * 60;
 
         // sekcia 6 kvapkova
         gPerZavlahy[5] = gPerZavlahy[4] - (percSekcia * 0.5);
-        gCasZavlahy[5] = 5 * 60;
+        gCasZavlahy[5] = 1 * 5;
 
         lcd.clear();
         lcd.setCursor(0, 0);
@@ -350,7 +350,7 @@ void nastavCasPriSpustani() {
   lcd.setCursor(0, 0);
   lcd.print("Set mode");
   timer = 0;
-  while (timer < 15) {ww
+  while (timer < 15){
     // cas
     lcd.setCursor(0, 1);
     if (gMode == 0)
